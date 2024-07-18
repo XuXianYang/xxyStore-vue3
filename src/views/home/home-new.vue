@@ -42,6 +42,7 @@ export default {
     return { newList };
     */
     
+
     // 懒加载：观察dom元素，dom出现时再去获取数据
     const {target , result} = useLazyData(findNew)
     return { newList:result,target };
