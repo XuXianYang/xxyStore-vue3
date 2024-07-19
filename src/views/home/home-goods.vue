@@ -1,7 +1,7 @@
 <template>
   <!-- 首页商品区域单个商品组件 -->
   <div class="singleGood">
-    <RouterLink class="image" to="/">
+    <RouterLink class="image" :to="`/goods/${good.id}`">
       <img v-lazyload="good.picture" alt="" />
     </RouterLink>
     <p class="name ellipsis-2">{{ good.name }}</p>

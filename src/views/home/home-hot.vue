@@ -5,7 +5,7 @@
       <div ref="target"  style="position: relative; height: 426px">
         <Transition name="fade">
           <ul class="hotList" v-if="hotList.length">
-            <li class="hot" v-for="item in hotList" :key="item.id">
+            <li class="hot" v-for="item in hotList" :key="item.id" @click="$router.push(`/goods/${item.id}`)">
               <img class="pic" :src="item.picture" alt="" />
               <p class="name">{{ item.title }}</p>
               <p class="alt">{{ item.alt }}</p>

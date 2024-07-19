@@ -7,7 +7,8 @@ const routes = [
     children: [
       { path: '/', component: () => import('@/views/home') },
       { path: '/category/:id', component: () => import('@/views/category') },
-      { path: '/category/sub/:id', component: () => import('@/views/category/sub') }
+      { path: '/category/sub/:id', component: () => import('@/views/category/sub') },
+      { path: '/goods/:id', component: () => import('@/views/goods') },
     ]
   }
 ]

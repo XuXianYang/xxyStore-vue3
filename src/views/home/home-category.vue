@@ -40,7 +40,7 @@
       </h4>
       <ul v-if="currCategory && currCategory.goods">
         <li v-for="good in currCategory.goods" :key="good.id">
-          <RouterLink to="/">
+          <RouterLink :to="`/goods/${good.id}`">
             <img :src="good.picture" alt="" />
             <div class="info">
               <p class="name ellipsis-2">{{ good.name }}</p>

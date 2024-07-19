@@ -22,7 +22,7 @@
           </strong>
         </RouterLink>
         <ul class="goods-list">
-          <li v-for="good in item.goods" :key="good.id">
+          <li v-for="good in item.goods" :key="good.id" @click="$router.push(`/goods/${good.id}`)">
             <homeGoods :good="good"></homeGoods>
           </li>
         </ul>

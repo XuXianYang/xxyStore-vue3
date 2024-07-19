@@ -16,7 +16,7 @@
       <h3>全部分类</h3>
       <ul class="topList" v-if="categoryObj.children">
         <li v-for="category in categoryObj.children" :key="category.id">
-          <a href="#">
+          <a @click="$router.push(`/category/sub/${category.id}`)">
             <img :src="category.picture" alt="" />
             <p>{{ category.name }}</p>
           </a>

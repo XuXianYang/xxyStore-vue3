@@ -8,7 +8,7 @@
       <div ref="target" style="position: relative; height: 426px">
         <Transition name="fade">
           <ul class="goodsList" v-if="newList.length">
-            <li class="good" v-for="item in newList" :key="item.id">
+            <li class="good" v-for="item in newList" :key="item.id" @click="$router.push(`/goods/${item.id}`)">
               <img class="pic" :src="item.picture" alt="" />
               <p class="name">{{ item.name }}</p>
               <p class="price"><span>￥</span>{{ item.price }}</p>
