@@ -19,3 +19,4 @@ export const findSubCategoryFilter = (id) => {
 export const findSubCategoryGoods = (data) => {
     return request('/category/goods/temporary', 'post', data)
 }
+

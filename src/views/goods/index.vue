@@ -20,20 +20,26 @@
         </div>
         <div class="spec">
           <GoodsName :good="goods"></GoodsName>
+          <GoodsSku :goods="goods" @change="changeSku"></GoodsSku>
+          <XtxNumberBox label="数量" v-model="num" :max="goods.inventory"></XtxNumberBox>
+          <XtxButton type="primary" style="margin-top:20px;">加入购物车</XtxButton>
         </div>
       </div>
       <!-- 商品推荐 -->
-      <GoodsRelevant />
+      <GoodsRelevant :id="goods.id" />
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
           <!-- 商品+评价 -->
-          <div class="goods-tabs">商品+评价</div>
+          <GoodsTabs></GoodsTabs>
           <!-- 注意事项 -->
-          <div class="goods-warn">注意事项</div>
+          <GoodsWarn></GoodsWarn>
         </div>
         <!-- 24热榜+专题推荐 -->
-        <div class="goods-aside">24热榜+专题推荐</div>
+        <div class="goods-aside">
+          <GoodsHot></GoodsHot>
+          <GoodsHot :type="2"></GoodsHot>
+        </div>
       </div>
     </div>
   </div>
@@ -41,18 +47,32 @@
 
 <script>
 import GoodsRelevant from "./goods-relevant.vue";
-import GoodsImage from "./goods-image.vue"
-import GoodsSales from "./goods-sales.vue"
-import GoodsName from "./goods-name.vue"
+import GoodsImage from "./goods-image.vue";
+import GoodsSales from "./goods-sales.vue";
+import GoodsName from "./goods-name.vue";
+import GoodsSku from "./goods-sku.vue";
+import GoodsTabs from "./goods-tabs.vue"
+import GoodsHot from "./goods-hot.vue"
+import GoodsWarn from "./goods-warn.vue"
 import { findGoods } from "@/api/product";
 import { useRoute } from "vue-router";
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick,provide } from "vue";
 export default {
-  components: { GoodsRelevant ,GoodsImage,GoodsSales,GoodsName},
+  components: { GoodsRelevant, GoodsImage, GoodsSales, GoodsName, GoodsSku,GoodsTabs,GoodsHot,GoodsWarn },
   setup() {
+    const num = ref(1)
     const goods = getGoodsDetail();
     console.log("商品详情", goods);
-    return { goods };
+    const changeSku = (sku) => {
+      if (sku.skuId) {
+        goods.value.price = sku.price;
+        goods.value.oldPrice = sku.oldPrice;
+        goods.value.inventory = sku.inventory;
+      }
+    };
+    // 父组件给子组件共享数据
+    provide('goods', goods)
+    return { goods, changeSku,num };
   },
 };
 // 获取商品详情数据
@@ -100,15 +120,6 @@ const getGoodsDetail = () => {
     .goods-article {
       width: 940px;
       margin-right: 20px;
-      .goods-tabs {
-        min-height: 600px;
-        background: #fff;
-      }
-      .goods-warn {
-        margin-top: 20px;
-        min-height: 600px;
-        background: #fff;
-      }
     }
     .goods-aside {
       width: 280px;

@@ -8,9 +8,20 @@
         :key="banner.id"
         :class="{ fade: idx === index }"
       >
-        <RouterLink :to="banner.hrefUrl">
+        <RouterLink v-if="banner.hrefUrl" :to="banner.hrefUrl">
           <img :src="banner.imgUrl" alt="" />
         </RouterLink>
+        <div v-else class="slider">
+          <RouterLink
+            v-for="goods in banner"
+            :key="goods.id"
+            :to="`/goods/${goods.id}`"
+          >
+            <img :src="goods.picture" alt="" />
+            <p class="name ellipsis">{{ goods.name }}</p>
+            <p class="price">&yen;{{ goods.price }}</p>
+          </RouterLink>
+        </div>
       </li>
     </ul>
     <a href="javascript:;" class="carousel-btn prev" @click="prevFn"
@@ -24,14 +35,14 @@
         v-for="(item, i) in bannerList"
         :key="i"
         :class="{ active: i === index }"
-        @click="index=i"
+        @click="index = i"
       ></span>
     </div>
   </div>
 </template>
 
 <script>
-import { onUnmounted, ref ,watch} from "vue";
+import { onUnmounted, ref, watch } from "vue";
 
 export default {
   name: "XtxCarousel",
@@ -40,61 +51,65 @@ export default {
       type: Array,
     },
     // 自动播放间隔时长：毫秒
-    duration:{
-      type:Number,
-      default:2000,
+    duration: {
+      type: Number,
+      default: 2000,
     },
-    aotoPlay:{
-      type:Boolean,
-      default:true
+    aotoPlay: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
     const index = ref(0);
     // 点击显示后一张，越界置为0
-    const nextFn =()=>{
-      index.value ++
-      if(index.value >= props.bannerList.length){
-        index.value = 0
+    const nextFn = () => {
+      index.value++;
+      if (index.value >= props.bannerList.length) {
+        index.value = 0;
       }
     };
     // 点击显示前一张，越界置为最后一个
-    const prevFn =()=>{
-      index.value --
-      if(index.value <0){
-        index.value = props.bannerList.length-1
+    const prevFn = () => {
+      index.value--;
+      if (index.value < 0) {
+        index.value = props.bannerList.length - 1;
       }
-    }
+    };
     //设置定时器 ，自动播放
-    let timer = null
-    const autoplay = ()=>{
-      clearInterval(timer)
-      timer = setInterval(()=>{
-        nextFn()
-      },props.duration)
-    }
+    let timer = null;
+    const autoplay = () => {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        nextFn();
+      }, props.duration);
+    };
     // 监听数组，开启定时器
-    watch(()=>props.bannerList,(newValue,oldValue)=>{
-      if(newValue.length && props.aotoPlay){
-        index.value = 0
-        autoplay()
-      }
-    }, { immediate: true })
+    watch(
+      () => props.bannerList,
+      (newValue, oldValue) => {
+        if (newValue.length && props.aotoPlay) {
+          index.value = 0;
+          autoplay();
+        }
+      },
+      { immediate: true }
+    );
     // 鼠标经过，关闭定时器
-    const stop = ()=>{
-      clearInterval(timer)
-    }
+    const stop = () => {
+      clearInterval(timer);
+    };
     // 鼠标移出，开启定时器
-    const start = ()=>{
-      if(props.bannerList.length && props.aotoPlay){
-        autoplay()
+    const start = () => {
+      if (props.bannerList.length && props.aotoPlay) {
+        autoplay();
       }
-    }
+    };
     // 销毁
     onUnmounted(() => {
-      clearInterval(timer)
-    })
-    return { index,nextFn,prevFn,stop,start };
+      clearInterval(timer);
+    });
+    return { index, nextFn, prevFn, stop, start };
   },
 };
 </script>
@@ -117,6 +132,30 @@ export default {
       top: 0;
       opacity: 0;
       transition: opacity 0.5s linear;
+      .slider {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 40px;
+        > a {
+          width: 240px;
+          text-align: center;
+          img {
+            padding: 20px;
+            width: 230px !important;
+            height: 230px !important;
+          }
+          .name {
+            font-size: 16px;
+            color: #666;
+            padding: 0 40px;
+          }
+          .price {
+            font-size: 16px;
+            color: @priceColor;
+            margin-top: 15px;
+          }
+        }
+      }
       &.fade {
         opacity: 1;
         z-index: 1;
