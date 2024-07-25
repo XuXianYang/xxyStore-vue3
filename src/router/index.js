@@ -10,7 +10,8 @@ const routes = [
       { path: '/category/sub/:id', component: () => import('@/views/category/sub') },
       { path: '/goods/:id', component: () => import('@/views/goods') },
     ]
-  }
+  },
+  { path: '/login', component: () => import('@/views/login') },
 ]
 
 const router = createRouter({
@@ -18,7 +19,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
   // 每次切换路由的时候滚动到顶部
-  scrollBehavior () {
+  scrollBehavior() {
     return { left: 0, top: 0 }
   }
 })

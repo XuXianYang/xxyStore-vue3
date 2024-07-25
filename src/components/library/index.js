@@ -9,6 +9,7 @@ import defaultImg from '@/assets/images/200.png'
 // import XtxMore from './xtx-more.vue'
 // import XtxBread from './xtx-bread.vue'
 // import XtxBreadItem from './xtx-bread-item.vue'
+import Message from './Message'
 
 // 参数：1. 目录  2. 是否加载子目录  3. 加载的正则匹配
 // 导入本文件夹下的所有组件
@@ -25,8 +26,8 @@ export default {
     // app.component(XtxBread.name, XtxBread)
     // app.component(XtxBreadItem.name, XtxBreadItem)
 
-     // 批量注册全局组件
-     importFn.keys().forEach(key => {
+    // 批量注册全局组件
+    importFn.keys().forEach(key => {
       // 导入组件
       const component = importFn(key).default
       // 注册组件
@@ -35,6 +36,9 @@ export default {
 
     // 注册自定义指令
     defineDirective(app)
+    
+    // 如果想挂载全局的属性，能够通过组件实例调用的属性this.$message
+    app.config.globalProperties.$message = Message// 原型函数
   }
 }
 
