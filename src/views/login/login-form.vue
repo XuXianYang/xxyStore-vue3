@@ -99,10 +99,14 @@
       <a href="javascript:;" class="btn" @click="login">登录</a>
     </Form>
     <div class="action">
-      <img
-        src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png"
-        alt=""
-      />
+      <a
+        href="https://graph.qq.com/oauth2.0/authorize?client_id=100556005&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback"
+      >
+        <img
+          src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png"
+          alt=""
+        />
+      </a>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>
@@ -199,19 +203,6 @@ export default {
           if (err.response.data) {
             Message({ type: "error", text: err.response.data.msg });
             console.log("登录失败：", err.response.data);
-
-            // 测试数据
-            // store.commit("user/setUser", {
-            //   id: "2222",
-            //   account: "xxy56397",
-            //   avatar: "",
-            //   mobile: "18339956397",
-            //   nickname: "我是一只鱼",
-            //   token: "18339956397",
-            // });
-            // Message({ type: "success", text: "登录成功" });
-            // // 登录成功跳转首页
-            // router.push(route.query.redirectUrl || "/");
           }
         }
       }

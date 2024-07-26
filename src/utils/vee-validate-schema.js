@@ -1,3 +1,4 @@
+import {userCheckAccount} from "@/api/user"
 // 定义校验规则提供给vee-validate组件使用
 export default {
     // 校验account
@@ -7,7 +8,7 @@ export default {
         // 2. 6-20个字符，需要以字母开头
         // 如何反馈校验成功还是失败，返回true才是成功，其他情况失败，返回失败原因。
         if (!value) return '请输入用户名'
-        if (!/^[a-zA-Z]\w{5,19}$/.test(value)) return '用户名必须字母开头且6-20个字符'
+        if (!/^[a-zA-Z]\w{2,19}$/.test(value)) return '用户名必须字母开头且3-20个字符'
         return true
     },
     password(value) {
@@ -28,5 +29,20 @@ export default {
     isAgree(value) {
         if (!value) return '请勾选同意用户协议'
         return true
-    }
+    },
+    async accountApi(value) {
+        if (!value) return '请输入用户名'
+        if (!/^[a-zA-Z]\w{2,19}$/.test(value)) return '字母开头且3-20个字符'
+        // 服务端校验
+        const { result } = await userCheckAccount(value)
+        if (result.valid) return '用户名已存在'
+        return true
+    },
+    rePassword(value, { form }) {
+        if (!value) return '请输入密码'
+        if (!/^\w{6,24}$/.test(value)) return '密码是6-24个字符'
+        // 校验密码是否一致  form表单数据对象
+        if (value !== form.password) return '两次输入的密码不一致'
+        return true
+    },
 }
