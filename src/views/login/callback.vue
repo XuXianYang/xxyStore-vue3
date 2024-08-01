@@ -57,12 +57,12 @@ export default {
     const isBind = ref(true);
     const store = useStore();
     const router = useRouter();
-    const unionId = ref(null)
+    const unionId = ref(null);
 
     if (QC.Login.check()) {
       // 检查QQ是否登录
       QC.Login.getMe((openId) => {
-        unionId.value = openId
+        unionId.value = openId;
         userQQLogin(openId)
           .then((data) => {
             console.log("QQ登录结果：", data);
@@ -77,9 +77,11 @@ export default {
               nickname,
               token,
             });
-            // 跳转到来源页或者首页
-            router.push(store.state.user.redirectUrl);
-            Message({ type: "success", text: "QQ登录成功" });
+            store.dispatch("cart/mergeLocalCart").then(() => {
+              // 跳转到来源页或者首页
+              router.push(store.state.user.redirectUrl);
+              Message({ type: "success", text: "QQ登录成功" });
+            });
           })
           .catch((e) => {
             Message({ type: "error", text: e.msg });
@@ -89,7 +91,7 @@ export default {
       });
     }
 
-    return { hasAccount, isBind ,unionId};
+    return { hasAccount, isBind, unionId };
   },
 };
 </script>

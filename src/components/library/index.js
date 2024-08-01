@@ -10,6 +10,7 @@ import defaultImg from '@/assets/images/200.png'
 // import XtxBread from './xtx-bread.vue'
 // import XtxBreadItem from './xtx-bread-item.vue'
 import Message from './Message'
+import Confirm from './Confirm'
 
 // 参数：1. 目录  2. 是否加载子目录  3. 加载的正则匹配
 // 导入本文件夹下的所有组件
@@ -39,6 +40,7 @@ export default {
     
     // 如果想挂载全局的属性，能够通过组件实例调用的属性this.$message
     app.config.globalProperties.$message = Message// 原型函数
+    app.config.globalProperties.$confirm = Confirm// 原型函数
   }
 }
 

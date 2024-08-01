@@ -42,7 +42,7 @@ export default {
 
 <style scoped lang="less">
 .app-header-nav {
-  width: 820px;
+  width: 800px;
   display: flex;
   justify-content: space-around;
   padding-left: 40px;

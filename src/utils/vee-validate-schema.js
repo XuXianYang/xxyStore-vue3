@@ -13,7 +13,7 @@ export default {
     },
     password(value) {
         if (!value) return '请输入密码'
-        if (!/^\w{6,24}$/.test(value)) return '密码是6-24个字符'
+        if (!/^[\w\S]{6,24}$/.test(value)) return '密码是6-24个字符'
         return true
     },
     mobile(value) {

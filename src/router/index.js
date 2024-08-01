@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '@/store'
 
 const routes = [
   {
@@ -9,6 +10,7 @@ const routes = [
       { path: '/category/:id', component: () => import('@/views/category') },
       { path: '/category/sub/:id', component: () => import('@/views/category/sub') },
       { path: '/goods/:id', component: () => import('@/views/goods') },
+      { path: '/cart', component: () => import('@/views/cart') },
     ]
   },
   { path: '/login', component: () => import('@/views/login') },
@@ -23,6 +25,17 @@ const router = createRouter({
   scrollBehavior() {
     return { left: 0, top: 0 }
   }
+})
+
+// 路由全局守卫
+router.beforeEach((to, from, next) => {
+  // 用户信息
+  const { token } = store.state.user.profile
+  // 跳转去member开头的地址却没有登录
+  if (to.path.startsWith('/member') && !token) {
+    next({ path: '/login', query: { redirectUrl: to.fullPath } })
+  }
+  next()
 })
 
 export default router

@@ -12,6 +12,7 @@
 <script>
 import { findRelGoods } from "@/api/product";
 import { ref } from "vue";
+
 export default {
   props: {
     id: {

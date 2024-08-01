@@ -11,11 +11,7 @@
           <i class="iconfont icon-search"></i>
           <input type="text" placeholder="搜一搜" />
         </div>
-        <div class="cart">
-          <a class="curr" href="#">
-            <i class="iconfont icon-cart"></i><em>2</em>
-          </a>
-        </div>
+        <appHeaderCart></appHeaderCart>
       </div>
     </div>
   </header>
@@ -23,14 +19,15 @@
 
 <script>
 import appHeaderNav from '@/components/app-header-nav.vue';
-
+import appHeaderCart from "@/components/app-header-cart.vue"
 export default {
-  components:{appHeaderNav},
+  components:{appHeaderNav,appHeaderCart},
 };
 </script>
 
 <style scoped lang="less">
 .app-header {
+  background: #fff;
   .container {
     display: flex;
     align-items: center;
@@ -49,7 +46,7 @@ export default {
       width: 820px;
       margin-top: 10px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       padding-left: 40px;
       
@@ -72,33 +69,6 @@ export default {
           margin-left: 30px;
           color: #666;
           height: 30px;
-        }
-      }
-      .cart {
-        margin-left: 15px;
-        width: 50px;
-        .curr {
-          height: 32px;
-          line-height: 32px;
-          text-align: center;
-          position: relative;
-          display: block;
-          .icon-cart {
-            font-size: 22px;
-          }
-          em {
-            font-style: normal;
-            position: absolute;
-            left: -5px;
-            top: -5px;
-            padding: 1px 6px;
-            line-height: 1;
-            background: @helpColor;
-            color: #fff;
-            font-size: 12px;
-            border-radius: 10px;
-            font-family: Arial;
-          }
         }
       }
     }

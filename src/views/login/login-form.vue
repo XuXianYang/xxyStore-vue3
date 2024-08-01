@@ -136,10 +136,11 @@ export default {
     const isMsgLogin = ref(false);
 
     // 表单信息对象
+    // 账号demo 密码hm#qd@23!
     const form = reactive({
       isAgree: true,
-      account: null,
-      password: null,
+      account: "demo",
+      password: "hm#qd@23!",
       mobile: null,
       code: null,
     });
@@ -160,8 +161,8 @@ export default {
     watch(isMsgLogin, () => {
       // 切换表单，清空数据
       form.isAgree = true;
-      form.account = null;
-      form.password = null;
+      form.account = "demo";
+      form.password = "hm#qd@23!";
       form.mobile = null;
       form.code = null;
       // 补充校验效果清除，Form组件提供resetForm()
@@ -177,15 +178,22 @@ export default {
       // 表单主动校验
       const valid = await formCom.value.validate();
       if (valid) {
-        const data = {};
+        let data = {};
         try {
           if (!isMsgLogin.value) {
             // 账号登录
-            data = await userAccountLogin(form.account, form.password);
+            data = await userAccountLogin({
+              account: form.account,
+              password: form.password,
+            });
           } else {
             // 验证码登录
-            data = await userMobileLogin(form.mobile, form.code);
+            data = await userMobileLogin({
+              mobile: form.mobile,
+              code: form.code,
+            });
           }
+          console.log("登录返回用户信息：", data);
           const { id, account, avatar, mobile, nickname, token } = data.result;
           // 登录成功，存储用户信息
           store.commit("user/setUser", {
@@ -196,9 +204,11 @@ export default {
             nickname,
             token,
           });
-          Message({ type: "success", text: "登录成功" });
-          // 登录成功跳转首页
-          router.push(route.query.redirectUrl || "/");
+          store.dispatch("cart/mergeLocalCart").then(() => {
+            Message({ type: "success", text: "登录成功" });
+            // 登录成功跳转首页
+            router.push(route.query.redirectUrl || "/");
+          });
         } catch (err) {
           if (err.response.data) {
             Message({ type: "error", text: err.response.data.msg });

@@ -152,10 +152,12 @@ export default {
               nickname,
               token,
             });
-            // 2. 跳转到来源页或者首页
-            router.push(store.state.user.redirectUrl);
-            // 3. 成功提示
-            Message({ type: "success", text: "QQ绑定成功" });
+            store.dispatch("cart/mergeLocalCart").then(() => {
+              // 2. 跳转到来源页或者首页
+              router.push(store.state.user.redirectUrl);
+              // 3. 成功提示
+              Message({ type: "success", text: "QQ绑定成功" });
+            });
           })
           .catch((err) => {
             console.log("登录失败", err);

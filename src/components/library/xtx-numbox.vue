@@ -3,7 +3,7 @@
     <div class="label">{{ label }}</div>
     <div class="numbox">
       <a href="javascript:;" @click="changeNum(-1)">-</a>
-      <input type="text" readonly :value="num" />
+      <input type="text" readonly :value="modelValue" />
       <a href="javascript:;" @click="changeNum(1)">+</a>
     </div>
   </div>
@@ -35,12 +35,12 @@ export default {
   setup(props,{emit}) {
     const num = useVModel(props, 'modelValue', emit)
     const changeNum = (no) => {
-      num.value = num.value + no;
-      if (num.value < props.min) num.value = props.min;
-      if (num.value > props.max) num.value = props.max;
-      emit('change', num)
+      const newValue = num.value +no
+      if(newValue<props.min||newValue>props.max)return;
+      num.value = newValue;
+      emit('change', newValue)
     };
-    return { num, changeNum };
+    return { changeNum };
   },
 };
 </script>
