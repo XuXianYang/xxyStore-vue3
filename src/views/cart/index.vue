@@ -244,12 +244,12 @@ export default {
 
       if (store.state.user.profile.token) {
         // 跳转结算页面
-        router.push("/member/checkout");
+        router.push("/checkout");
       } else {
         Confirm({ text: "下单结算需要登录，您是否去登录？" })
           .then(() => {
             // 此处跳转会由路由守卫拦截
-            router.push("/member/checkout");
+            router.push("/checkout");
           })
           .catch((e) => {});
       }

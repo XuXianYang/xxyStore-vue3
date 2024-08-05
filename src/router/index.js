@@ -11,6 +11,9 @@ const routes = [
       { path: '/category/sub/:id', component: () => import('@/views/category/sub') },
       { path: '/goods/:id', component: () => import('@/views/goods') },
       { path: '/cart', component: () => import('@/views/cart') },
+      { path: '/checkout', component: () => import('@/views/pay/checkout') },
+      { path: '/pay', component: () => import('@/views/pay') },
+      { path: '/pay/callback', component: () => import('@/views/pay/result') },
     ]
   },
   { path: '/login', component: () => import('@/views/login') },

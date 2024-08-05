@@ -48,7 +48,6 @@ export default {
     const store = useStore()
     const route = useRoute()
     store.commit('user/setRedirectUrl', route.query.redirectUrl || '/')
-    // {"user":{"profile":{"id":"1645822067746144258","account":"demo","avatar":"http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png","mobile":"12022222409","nickname":"test","token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7XCJuYW1lXCI6XCJ0ZXN0XCIsXCJpZFwiOlwiMTY0NTgyMjA2Nzc0NjE0NDI1OFwiLFwidXNlcm5hbWVcIjpcImRlbW9cIn0iLCJpYXQiOjE3MjIyMTk1MzQsImV4cCI6MTcyMjQ3ODczNH0.GcWwN6IpaNY44ww18QrpRqnAtsi-FyMcESvX8t8gcLU"},"redirectUrl":"/"},"cart":{"list":[{"id":"3533018","skuId":"3741000","name":"潮州非遗手作茗家私享精品手拉壶","attrsText":"壶形:茗家私享水平壶（160ml） ","specs":[],"picture":"https://yanxuan-item.nosdn.127.net/8865182862477e4ebdfc07c6b3bc0d51.png","price":"1450.00","nowPrice":"1450.00","nowOriginalPrice":"1450.00","selected":true,"stock":2446,"count":1,"isEffective":true,"discount":null,"isCollect":false,"postFee":6}]}}
 
     return { activeIdx };
   },
