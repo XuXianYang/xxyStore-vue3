@@ -5,7 +5,7 @@
       <ul>
         <template v-if="profile.token">
           <li>
-            <a href="javascript:;"
+            <a href="javascript:;" @click="$router.push('/member')"
               ><i class="iconfont icon-user"></i>{{ profile.account }}</a
             >
           </li>
@@ -17,7 +17,7 @@
           </li>
           <li><a href="javascript:;">免费注册</a></li>
         </template>
-        <li><a href="javascript:;">我的订单</a></li>
+        <li><a href="javascript:;" @click="$router.push('/member/order')">我的订单</a></li>
         <li><a href="javascript:;">会员中心</a></li>
         <li><a href="javascript:;">帮助中心</a></li>
         <li><a href="javascript:;">关于我们</a></li>

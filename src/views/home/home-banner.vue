@@ -28,10 +28,10 @@ export default {
   top: 0;
   width: 1240px;
   height: 500px;
-  ::v-deep .carousel-btn.prev {
+  :v-deep .carousel-btn.prev {
     left: 270px;
   }
-  ::v-deep .carousel-indicator {
+  :v-deep .carousel-indicator {
     padding-left: 250px;
   }
 }

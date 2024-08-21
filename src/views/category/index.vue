@@ -96,7 +96,7 @@ export default {
   margin: 0 auto;
   .banner {
     height: 500px;
-    ::v-deep .carousel-btn.prev {
+    :v-deep .carousel-btn.prev {
       left: 20px;
     }
   }

@@ -12,8 +12,18 @@ const routes = [
       { path: '/goods/:id', component: () => import('@/views/goods') },
       { path: '/cart', component: () => import('@/views/cart') },
       { path: '/checkout', component: () => import('@/views/pay/checkout') },
+      { path: '/checkout/:id', component: () => import('@/views/pay/checkout') },
       { path: '/pay', component: () => import('@/views/pay') },
       { path: '/pay/callback', component: () => import('@/views/pay/result') },
+      { 
+        path: '/member', 
+        component: () => import('@/views/member/Layout') ,
+        children:[
+          { path: '/member', component: () => import('@/views/member/index') },
+          { path: '/member/order', component: () => import('@/views/order/index') },
+          { path: '/member/order/:id', component: () => import('@/views/order/detail') },
+        ]
+      },
     ]
   },
   { path: '/login', component: () => import('@/views/login') },

@@ -49,7 +49,7 @@ export default {
     margin-bottom: 10px;
     font-weight: normal;
   }
-  ::v-deep .good-item {
+  :v-deep .good-item {
     background: #fff;
     width: 100%;
     margin-bottom: 10px;
