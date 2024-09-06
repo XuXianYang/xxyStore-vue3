@@ -41,13 +41,13 @@ import { orderStatus } from "@/api/constants";
 import { findOrderList, delteOrder, confirmOrder } from "@/api/order";
 import OrderItem from "@/views/order/order-item.vue";
 import OrderCancel from "@/views/order/order-cancel.vue";
-import OrderLogistics from "@/views/order/order-logistics.vue"
+import OrderLogistics from "@/views/order/order-logistics.vue";
 import Confirm from "@/components/library/Confirm";
 import Message from "@/components/library/Message";
 
 export default {
   name: "MemberOrder",
-  components: { OrderItem, OrderCancel,OrderLogistics },
+  components: { OrderItem, OrderCancel, OrderLogistics },
   setup() {
     const activeName = ref("all");
     const clickTab = (item) => {
@@ -104,25 +104,6 @@ export default {
         });
     };
 
-    // 确认收货
-    const onConfirmOrder = (item) => {
-      // item 就是你要确认收货的订单
-      Confirm({ text: "您确认收到货吗？确认后货款将会打给卖家。" }).then(() => {
-        confirmOrder(item.id).then(() => {
-          Message({ text: "确认收货成功", type: "success" });
-          // 确认收货后状态变成 待评价
-          item.orderState = 4;
-        });
-      });
-    };
-
-    // 查看物流
-    const orderLogistics = ref(null);
-    const onOrderLogistics = order =>{
-      console.log('查看物流',order);
-      orderLogistics.value.open(order);
-    }
-
     return {
       activeName,
       clickTab,
@@ -135,14 +116,43 @@ export default {
       requestParams,
       ...useCancelOrder(),
       deleteOrder,
-      onConfirmOrder,
-      onOrderLogistics,
-      orderLogistics
+      ...useConfirmOrder(),
+      ...useOrderLogistics(),
     };
   },
 };
+
+// 查看物流
+export const useOrderLogistics = () => {
+  const orderLogistics = ref(null);
+  const onOrderLogistics = (order) => {
+    console.log("查看物流", order);
+    orderLogistics.value.open(order);
+  };
+  return { orderLogistics, onOrderLogistics };
+};
+
+// 确认收货
+export const useConfirmOrder = () => {
+  const onConfirmOrder = (item) => {
+    // item 就是你要确认收货的订单
+    Confirm({ text: "您确认收到货吗？确认后货款将会打给卖家。" })
+      .then(() => {
+        confirmOrder(item.id).then(() => {
+          Message({ text: "确认收货成功", type: "success" });
+          // 确认收货后状态变成 待评价
+          item.orderState = 4;
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return { onConfirmOrder };
+};
+
 // 封装逻辑-取消订单
-const useCancelOrder = () => {
+export const useCancelOrder = () => {
   const orderCancelCom = ref(null);
   const onCancelOrder = (item) => {
     // item 就是你要取消的订单

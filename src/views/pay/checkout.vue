@@ -97,23 +97,38 @@
 
 <script>
 import checkoutAddress from "@/views/pay/checkout-address.vue";
-import { findCheckoutInfo, createOrder } from "@/api/order";
+import {
+  findCheckoutInfo,
+  createOrder,
+  findOrderRepurchase,
+} from "@/api/order";
 import { ref, reactive } from "vue";
 import Message from "@/components/library/Message";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   components: { checkoutAddress },
   setup() {
     const checkoutInfo = ref(null);
-    // 获取结算商品信息
-    findCheckoutInfo().then((res) => {
-      console.log("结算商品信息：", res);
-      checkoutInfo.value = res.result;
-      requestParams.goods = checkoutInfo.value.goods.map((item) => {
-        return { skuId: item.skuId, count: item.count };
+    const route = useRoute();
+    if (route.query.orderId) {
+      findOrderRepurchase(route.query.orderId).then((res) => {
+        console.log("再次购买结算信息", res);
+        checkoutInfo.value = res.result;
+        requestParams.goods = checkoutInfo.value.goods.map((item) => {
+          return { skuId: item.skuId, count: item.count };
+        });
       });
-    });
+    } else {
+      // 获取结算商品信息
+      findCheckoutInfo().then((res) => {
+        console.log("结算商品信息：", res);
+        checkoutInfo.value = res.result;
+        requestParams.goods = checkoutInfo.value.goods.map((item) => {
+          return { skuId: item.skuId, count: item.count };
+        });
+      });
+    }
 
     // 结算提交的字段
     const requestParams = reactive({
@@ -131,12 +146,12 @@ export default {
     };
 
     // 提交订单
-    const router = useRouter()
+    const router = useRouter();
     const submitOrder = () => {
-      if (!requestParams.addressId) return Message({ text: '请选择收货地址' })
+      if (!requestParams.addressId) return Message({ text: "请选择收货地址" });
       createOrder(requestParams)
         .then((res) => {
-          router.push({path:"/pay",query: { id: res.result.id } })
+          router.push({ path: "/pay", query: { id: res.result.id } });
           Message({ text: "订单提交成功", type: "success" });
         })
         .catch((e) => {

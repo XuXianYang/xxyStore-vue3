@@ -77,7 +77,7 @@
           >
         </p>
         <p v-if="[2, 3, 4, 5].includes(order.orderState)">
-          <a @click="$router.push(`/checkout/${order.id}`)" href="javascript:;"
+          <a @click="$router.push(`/checkout?orderId=${order.id}`)" href="javascript:;"
             >再次购买</a
           >
         </p>

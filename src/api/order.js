@@ -49,3 +49,8 @@ export const confirmOrder = (orderId) => {
 export const logisticsOrder = (id) => {
     return request(`/member/order/${id}/logistics`, 'get')
 }
+
+// 获取再次购买的订单结算信息
+export const findOrderRepurchase = (id) => {
+    return request(`/member/order/repurchase/${id}`, 'get')
+}
